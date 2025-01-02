@@ -1,9 +1,9 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-10 py-12">
     <div class="w-64">
-        <a href="" class="block w-full py-4 mb-10 bg-gradient-to-r from-blue-600 to-blue-700 hover:to-blue-600 text-white/90 font-bold text-xs text-center rounded-md">
+        <a href="{{ route('threads.create') }}" class="block w-full py-4 mb-10 bg-gradient-to-r from-blue-600 to-blue-700 hover:to-blue-600 text-white/90 font-bold text-xs text-center rounded-md">
             Preguntar
         </a>
-        <ul class="space-y-2">
+        <ul class="space-y-4">
             @foreach ($categories as $category)
             <li>
                 <a href="#" wire:click.prevent="filterByCategory('{{ $category->id }}')" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="w-full space-y-4">
                         <h2 class="flex items-start justify-between">
-                            <a href="" class="text-xl font-semibold text-white/90">
+                            <a href="{{ route('thread', $thread) }}" class="text-xl font-semibold text-white/90">
                                 {{ $thread->title }}
                             </a>
                             <span class="rounded-full text-xs py-2 px-4 capitalize" style="color: {{ $thread->category->color }}; border: 1px solid {{ $thread->category->color }}">
@@ -56,8 +56,10 @@
 
                                 {{ $thread->replies_count }}
                                 Respuesta{{ $thread->replies_count !== 1 ? 's' : '' }}
+                                @can('update', $thread)
                                 |
-                                <a href="" class="hover:text-white">Editar</a>
+                                <a href="{{ route('threads.edit', $thread) }}" class="hover:text-white">Editar</a>
+                                @endcan
                             </span>
                         </p>
                     </div>
